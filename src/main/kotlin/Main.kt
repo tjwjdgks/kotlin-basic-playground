@@ -61,6 +61,7 @@ fun whenex(){
 fun rangeex(){
     val x = 10
     val y = 9
+
     if (x in 1..y+1){
         println("fits in range")
     }
@@ -102,6 +103,114 @@ fun collectionsBasic(){
 fun nullCheck(str : String): Int?{
     return null
 }
+
+// string template
+fun stringTemplateEx() {
+    var a = 1
+    val s1 = "a is $a"
+    println(s1)
+    a = 2
+    val s2 = "${s1.replace("is","was")}, but now is $a"
+    println(s2)
+}
+fun typeCheckEx(obj: Any) : Int? {
+    if(obj is String) return obj.length
+    return null
+}
+// create dto
+// var mutable val immutable
+// 내부적으로 getter, setter를 사용함, 변수 private이다. 단 코틀린은 단순히 참조하는 것처럼 보이게 함
+// data Type, getter,setter, equals, hashCode, toString, copy 등 자동생성
+data class Customer(var name: String, val email: String)
+
+// default values for function parameters
+fun foo(a: Int =0, b: String="") : Unit {
+
+}
+
+fun filterex(){
+    val arr = intArrayOf(1,2,3,4,5)
+    val positives1 = arr.filter { x-> x>0 }
+    val positives2 = arr.filter { it >0 }
+}
+
+// check presence of a element
+fun isPresence(){
+    val arr = listOf("tt")
+    if("ho" in arr){
+
+    }
+    if("ho" !in arr){
+
+    }
+}
+// string interpolation
+fun sinterpol(){
+    val name = "tet"
+    println("name $name")
+}
+// instance check
+fun instanceCheck(any: Any) : Int {
+    var test = 0;
+    test = when(any){
+        is Shape -> 1
+        is Rectangle -> 2
+        is Int -> 0
+        else -> 3
+    }
+    return test
+}
+// read-oney list, map
+fun readOnly(){
+    val list = listOf("a","b","c")
+    val map = mapOf("a" to 1, "b" to 2)
+    // access map entry
+    println(map["a"])
+    // traverse map list pair
+    for((k,v) in map){
+        println("$k -> $v")
+    }
+}
+
+// lazy property
+fun lazyP(){
+    val p : String by lazy { // the value is computed only on first access
+        "test"
+    }
+}
+// create a singleton
+// 코틀린에서 object 키워드는 싱글톤 object로 define 한다는 것
+object Resource {
+    val name = "Name"
+}
+
+// instantiate an abstract class
+abstract class MyAbstaractClass{
+    abstract fun doSomething();
+    abstract fun sleep()
+}
+fun abstractEx(){
+    val myObject = object : MyAbstaractClass(){
+        override fun doSomething() {
+            TODO("Not yet implemented")
+        }
+
+        override fun sleep() {
+            TODO("Not yet implemented")
+        }
+    }
+}
+// if not null, if not null else
+fun ifNotNullEx(){
+    val test = arrayOf("s");
+    println(test?.size)
+    val test2 = typeCheckEx(1L)
+    println(test2?.toString() ?: "empty") // if test2 is null, print "empty"
+    val test3 = test2?.toString() ?: run{ // to calculate the fallback value in a code block, use 'run'
+        "test"
+    }
+
+}
 fun main(args: Array<String>) {
     println("hello world")
     println(funExample(1,2));
@@ -110,4 +219,15 @@ fun main(args: Array<String>) {
     fun maxOf(a: Int, b:Int) = if(a>b) a else b
     rangeex()
     collectionsBasic()
+    stringTemplateEx()
+    var test = listOf("test");
+    test += "ed"
+    // 중괄호이다 소괄호 아님
+    test.forEach {
+        println(it)
+    };
+    println(typeCheckEx("test"))
+    var testDto = Customer("test","test")
+    println(instanceCheck(1))
+    readOnly()
 }
