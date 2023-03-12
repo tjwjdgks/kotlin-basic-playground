@@ -1,3 +1,7 @@
+import java.lang.Exception
+import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
+import java.math.BigDecimal
 
 // basic syntax
 fun funExample(a : Int, b:Int): Int{
@@ -211,6 +215,130 @@ fun ifNotNullEx(){
     }
 
 }
+// execute if null
+fun executeIfNull(){
+    val values = mapOf("s" to 1)
+    val email = values["email"] ?: throw IllegalStateException("email is missing")
+}
+
+// get first item of a possible empty collection
+fun firstItemEmptyCollection(){
+    val emails = emptyArray<String>()
+    val mainEmail = emails.firstOrNull() ?: "null";
+}
+// execute is not null
+fun executeNotNull(){
+    val value = emptyArray<String>()
+    value?.let {
+        println(it) // execute this block if not null
+    }
+    val m = typeCheckEx("test")
+    val mapped = m?.let { it } ?: "default_value" // defaultValue is returned if the value or transform result is null
+}
+// return on when statement
+fun transform(color: String): Int{
+    return when(color) {
+        "Red" -> 0
+        "Green" -> 1
+        else -> throw IllegalArgumentException("invalid color")
+    }
+}
+// try-catch expression
+fun testTryCatch(){
+    val result = try{
+        transform("test")
+    }catch (e: IllegalArgumentException){
+        throw Exception("no")
+    }
+}
+// if expression
+fun ifExpression(){
+    val x = 1
+    val y = if(x==1){
+        "one"
+    } else if (x==2){
+        "two"
+    } else {
+        "other"
+    }
+}
+// Builder-style usage of methods that return unit
+fun arrayOfMinusOnes(size :Int) : IntArray {
+    return IntArray(size).apply { fill(-1) }
+}
+// single-expression functions
+fun theAnswer() = 42
+// == equal
+fun theAnswerEq() : Int{
+    return 42
+}
+// when expression is useful for single-expression
+fun transformSingle(color: String) : Int = when(color){
+    "Red" -> 0
+    "Blue" -> 1
+    else -> throw IllegalArgumentException("no")
+}
+
+// call mulitple mothods on an object instance with
+class Turtle {
+    fun penDown(){
+
+    }
+    fun penUp(){
+
+    }
+    fun turn(degrees: Double){
+
+    }
+    fun forward(pixels: Double){
+
+    }
+}
+fun TurtleEx(){
+    val myTurtle = Turtle()
+    with(myTurtle) { //draw a 100 pix square
+        penDown()
+        for (i in 1..4) {
+            forward(100.0)
+            turn(90.0)
+        }
+        penUp()
+}
+
+// configure properties of an object
+fun rectangleApply(){
+    val myRectangle2  = Rectangle(1.0,2.0).apply {
+        height = 2.0
+        length = 3.0
+    }
+}}
+
+
+/**
+ * Generic function that requires the generic type information
+ *   public final class Gson {
+ *      ...
+ *      public <T> T fromJson(JsonElement json, Class<T> classOfT) throws JsonSyntaxException {
+ *      ...
+ *  inline fun <reified T: Any> Gson.fromJson(json: JsonElement): T = this.fromJson(json, T::class.java)
+ */
+
+// swap two variable
+fun swapEx(){
+    var a = 1
+    var b = 2
+    a = b.also { b = a }
+}
+
+// mar code as incomplete (TODO)
+// Kotlin's standard library has a TODO() function
+// that will always throw a NotImplementedError.
+//  Its return type is Nothing so it can be used regardless of expected type.
+//  There's also an overload that accepts a reason parameter:
+fun calcTaxes(): BigDecimal = TODO("Waiting for feedback from accounting")
+
+
+
 fun main(args: Array<String>) {
     println("hello world")
     println(funExample(1,2));
